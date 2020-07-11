@@ -43,7 +43,7 @@ ativ <- data.table::fread(input = "data/activity.csv")
 
 1. Calculate the total number of steps taken per day
 
-```{r, echo = FALSE}
+```{r, echo = TRUE}
 tot_stp <- ativ[, c(lapply(.SD, sum, na.rm = FALSE)), .SDcols = c("steps"), by = .(date)] 
 head(tot_stp, 10)
 ```
