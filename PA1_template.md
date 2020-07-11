@@ -43,10 +43,22 @@ ativ <- data.table::fread(input = "data/activity.csv")
 
 1. Calculate the total number of steps taken per day
 
-```{r, echo = TRUE}
+```{r}
 tot_stp <- ativ[, c(lapply(.SD, sum, na.rm = FALSE)), .SDcols = c("steps"), by = .(date)] 
 head(tot_stp, 10)
 ```
+
+    ##           date steps
+    ##  1: 2012-10-01    NA
+    ##  2: 2012-10-02   126
+    ##  3: 2012-10-03 11352
+    ##  4: 2012-10-04 12116
+    ##  5: 2012-10-05 13294
+    ##  6: 2012-10-06 15420
+    ##  7: 2012-10-07 11015
+    ##  8: 2012-10-08    NA
+    ##  9: 2012-10-09 12811
+    ## 10: 2012-10-10  9900
 
 2. If you do not understand the difference between a histogram and a barplot, research the difference between them. Make a histogram of the total number of steps taken each day
 
@@ -61,6 +73,8 @@ ggplot(tot_stp, aes(x = steps)) +
 ```{r}
 tot_stp[, .(Mean_Steps = mean(steps, na.rm = TRUE), Median_Steps = median(steps, na.rm = TRUE))]
 ```
+    ##    Mean_Steps Median_Steps
+    ## 1:   10766.19        10765
 
 ## What is the average daily activity pattern?
 
@@ -94,6 +108,10 @@ tot_stp <- ativ[, c(lapply(.SD, sum)), .SDcols = c("steps"), by = .(date)]
 tot_stp[, .(Mean_Steps = mean(steps), Median_Steps = median(steps))]
 ggplot(tot_stp, aes(x = steps)) + geom_histogram(fill = "blue", binwidth = 1000) + labs(title = "Daily Steps", x = "Steps", y = "Frequency")
 ```
+    ##    Mean_Steps Median_Steps
+    ## 1:    9354.23        10395
+
+
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
@@ -110,6 +128,17 @@ ativ[, `weekday or weekend` := as.factor(`weekday or weekend`)]
 head(ativ, 10)
 ```
 
+    ##     steps       date interval Day of Week weekday or weekend
+    ##  1:    NA 2012-10-01        0      Monday            weekday
+    ##  2:    NA 2012-10-01        5      Monday            weekday
+    ##  3:    NA 2012-10-01       10      Monday            weekday
+    ##  4:    NA 2012-10-01       15      Monday            weekday
+    ##  5:    NA 2012-10-01       20      Monday            weekday
+    ##  6:    NA 2012-10-01       25      Monday            weekday
+    ##  7:    NA 2012-10-01       30      Monday            weekday
+    ##  8:    NA 2012-10-01       35      Monday            weekday
+    ##  9:    NA 2012-10-01       40      Monday            weekday
+    ## 10:    NA 2012-10-01       45      Monday            weekday
 
 2. Make a panel plot containing a time series plot (i.e. 𝚝𝚢𝚙𝚎 = "𝚕") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.
 
